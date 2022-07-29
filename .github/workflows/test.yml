@@ -7,10 +7,11 @@ jobs:
   create-matrix:
     name: create matrix
     runs-on: ubuntu-latest
-    output: ${{ steps.versions.outputs.value }}
+    outputs:
+      numbers: ${{ steps.number-list.outputs.value }}
     steps:
       - run: echo "::set-output name=value::[1,2,3,4,5]"
-        id: versions
+        id: number-list
   test:
     name: test
     runs-on: ubuntu-latest
@@ -19,6 +20,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        number: ${{ fromJSON(needs.create-matrix.outputs.versions) }}
+        number: ${{ fromJSON(needs.create-matrix.outputs.numbers) }}
     steps:
       - run: echo "${{ matrix.number }}"
