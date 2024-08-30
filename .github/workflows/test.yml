@@ -10,10 +10,10 @@ jobs:
     outputs:
       numbers: ${{ steps.number-list.outputs.value }}
     steps:
-      - run: echo "::set-output name=value::[1,2,3,4,5]"
+      - run: echo "value=[1,2,3,4,5]" | tee -a "$GITHUB_OUTPUT"
         id: number-list
   test:
-    name: test
+    name: test ${{ matrix.number }}
     runs-on: ubuntu-latest
     needs:
       - create-matrix
